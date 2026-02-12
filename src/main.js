@@ -47,6 +47,8 @@ async function render(action) {
   // result = applyFiltering(result, state, action);
   query = applyPagination(query, state, action);
   query = applyFiltering(query, state, action);
+  query = applySearching(query, state, action);
+  query = applySorting(query, state, action);
 
   const { total, items } = await api.getRecords(query);
 
@@ -61,7 +63,7 @@ const sampleTable = initTable(
     before: ["search", "header", "filter"],
     after: ["pagination"],
   },
-  render,
+  render
 );
 
 const { applyPagination, updatePagination } = initPagination(
@@ -74,11 +76,11 @@ const { applyPagination, updatePagination } = initPagination(
     input.checked = isCurrent;
     label.textContent = page;
     return el;
-  },
+  }
 );
 
 const { applyFiltering, updateIndexes } = initFiltering(
-  sampleTable.filter.elements,
+  sampleTable.filter.elements
 );
 
 const applySorting = initSorting([
