@@ -40,14 +40,20 @@ export function initFiltering(elements) {
           el.textContent = name;
           el.value = name;
           return el;
-        }),
+        })
       );
     });
   };
 
   const applyFiltering = (query, state, action) => {
     // код с обработкой очистки поля
-
+    if (action) {
+      if (action.name === "clear") {
+        let input = action.parentElement.querySelector("input");
+        input.value = "";
+        state[input.name] = "";
+      }
+    }
     // @todo: #4.5 — отфильтровать данные, используя компаратор
     const filter = {};
     Object.keys(elements).forEach((key) => {
